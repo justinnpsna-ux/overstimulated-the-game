@@ -7,7 +7,7 @@ import { canvas, ctx, nextCircleId, cellSize,
 import { entities } from './index.js'
 
 //misc
-import { playerMoveSet } from './MODplayer.js';
+import { playerMoveSet, playerStats, playerStatsOriginal } from './MODplayer.js';
 
 //sound
 import { playSound } from './index.js';
@@ -36,7 +36,7 @@ export class Animate { //list all functions needed in animate func
             if (i.damaged && i.cooldown < 3) {
                 if (i.damageCooldown <= 0) {
                     i.damageCooldown = 10;
-                    i.health--;
+                    playerStats.health--;
                     playSound('SFXow.mp3');
                 };
 

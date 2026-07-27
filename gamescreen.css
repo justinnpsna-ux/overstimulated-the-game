@@ -1,3 +1,8 @@
 .gameHeader {
     margin-top: -20px;
 }
+
+/* PROTOTYPES */
+#playerStatsPrototype {
+    overflow-wrap: break-word;
+}

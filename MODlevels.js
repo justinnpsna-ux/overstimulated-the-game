@@ -88,7 +88,14 @@ export class LevelManager {
                 isBeat: false,
                 name: "Level 10: everything is literally red",
                 spawnBall: 20,
-                spawnSingleShooter: 30
+                spawnLaserShooter: 30
+            },
+            {
+                isBeat: false,
+                name: "Level 11: do i ever get a break?",
+                spawnBall: 20,
+                spawnSingleShooter: 15,
+                spawnChargeHitter: 15
             }
         ]
     }

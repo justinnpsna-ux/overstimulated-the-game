@@ -1,4 +1,4 @@
-import { Player, playerMoveSet } from './MODplayer.js'
+import { Player, playerMoveSet, playerStats } from './MODplayer.js'
 import { Circle } from './MODcircle.js'
 import { SingleShooter, SpreadShooter, ChargeHitter, LaserShooter } from './MODboss.js'
 import { Bullet, BadBullet, BadLaser } from './MODbullet.js'
@@ -143,17 +143,19 @@ function animate() {
     document.getElementById('counter').textContent = destroyedCounter;
 
     //health death system
-    if (entities.player[0].health <= 0 && !immortal) { 
+    if (playerStats.health <= 0 && !immortal) { 
         entities.player = [];
         isPlayerCreated = false;
         gameState.drawDeathMenu();
     }
-    document.getElementById('playerhealth').textContent = entities.player[0].health;
+    document.getElementById('playerhealth').textContent = playerStats.health;
 
     //to check if there are no enemies to move on levels
     levelManager.getSuccess();
 
     unlockNextLevel();
+
+    document.getElementById("playerStatsPrototype").textContent = Object.entries(playerStats);
 
     requestAnimationFrame(animate);
 };
