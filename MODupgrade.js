@@ -12,13 +12,20 @@ class Upgrade {
         this.misc = misc;
 
         this.upgradeList = [ //DICTIONARY!!!! i learned by random chance
-            { name: "Minigun", desc: "-20% Fire Cooldown", effect: {fireCooldown: -4} },
-            { name: "Minimegagun", desc: "+100% Bullet Size", effect: {bulletSize: +3}, requires: "Minigun" },
-            { name: "McDonalds world cup meal", desc: "+5 Health", effect: {health: 5} },
-            { name: "Chipotle", desc: "-20% Ultimate Cooldown", effect: {ultimateCooldown: -15} },
-            { name: "Planet fitness", desc: "-20% Dash Cooldown", effect: {dashCooldown: -12} },
-            { name: "lamine yamal", desc: "+20% Bullet Damage", effect: {ultimateCooldown: -15} },
-            { name: "plyometrics", desc: "+20% Dash Distance", effect: {dashDistance: 40} }
+            { name: "only in philly", desc: "-10% Reload Time", effect: {fireCooldown: -2} },
+            { name: "taco bell 4am", desc: "+100% Bullet Size", effect: {bulletSize: +3}, requires: "Minigun" },
+            { name: "mcdonalds world cup meal", desc: "+2 Health", effect: {health: 2} },
+            { name: "chipotle double queso", desc: "-7% Ultimate Cooldown", effect: {ultimateCooldown: -5} },
+            { name: "hesi pump fake", desc: "-20% Dash Cooldown", effect: {dashCooldown: -12} },
+            { name: "after david laid edit", desc: "+20% Bullet Damage", effect: {bulletDamage: 0.2} },
+            { name: "starbucks venti pumpkin spice", desc: "+40% Dash Distance", effect: {dashDistance: 80} },
+            { name: "dominos 30 mins or less", desc: "+30% Bullet Speed", effect: {bulletSpeed: 30} },
+            { name: "erling haaland vs ball", desc: "+20% Movement Speed", effect: {movementSpeed: 2} },
+            { name: "fast metabolism", desc: "-10% Player Size", effect: {playerRadius: -1.5} },
+            { name: "dry scoop pre workout", desc: "-20% Reload Time, -1 Health", effect: {fireCooldown: -4, health: -1} },
+            { name: "hoodie method", desc: "Immune for +0.2s after Dash", effect: {dashStealthDuration: 2} },
+
+            //1000 degree honey bun: burn enemies
         ];
     }
 

@@ -135,7 +135,7 @@ function animate() {
     animateFunc.drawSwinger();
 
     //animateFunc.filterBullets();
-    entities.bullets = entities.bullets.filter(b => b.toDelete == false && Math.abs(b.vx) + Math.abs(b.vy) >= 100);
+    entities.bullets = entities.bullets.filter(b => b.toDelete == false && Math.abs(b.vx) + Math.abs(b.vy) >= 75);
     entities.badBullets = entities.badBullets.filter(b => b.toDelete == false && Math.abs(b.vx) + Math.abs(b.vy) >= 10);
 
     //point system
@@ -284,3 +284,13 @@ document.addEventListener('click', (event) => {
     event.target.blur();
   }
 }); //to unselect buttons after clicking!!!!!
+
+window.addEventListener('keydown', function(e) {
+  // Check if the spacebar is pressed
+  if (e.code === 'Space' || e.keyCode === 32) {
+    // Prevent default scrolling behavior unless typing in an input or textarea
+    if (e.target.tagName !== 'INPUT' && e.target.tagName !== 'TEXTAREA') {
+      e.preventDefault();
+    }
+  }
+}); //to preven space bar from scrolling down the page

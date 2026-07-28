@@ -12,7 +12,7 @@ import { playSound, sfxLimit, sfxPool, sfxPoolIndex } from './index.js';
 //bad bullets
 import { BadBullet, BadLaser, Bullet } from './MODbullet.js'
 
-const delay = (ms) => new Promise(resolve => setTimeout(resolve, ms));
+export const delay = (ms) => new Promise(resolve => setTimeout(resolve, ms));
 
 class Boss {
     constructor(x, y, radius, vx, vy, ax, ay, mass) {

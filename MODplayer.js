@@ -12,12 +12,17 @@ import { playSound, sfxLimit, sfxPool, sfxPoolIndex } from './index.js';
 //bad bullets
 import { BadBullet, Bullet } from './MODbullet.js'
 
+import { delay } from './MODboss.js';
+
 export const playerStatsOriginal = //so we have a copy at all times
 {   health: 10,
     bulletDamage: 1,
     bulletSize: 3,
+    bulletSpeed: 100,
     movementSpeed: 10,
     dashDistance: 200,
+    dashStealthDuration: 0,
+    playerRadius: 15,
 
     fireCooldown: 20,
     ultimateCooldown: 75,
@@ -28,8 +33,11 @@ export const playerStats = //so we can do power ups (maybe use points to buy?)
 {   health: 10,
     bulletDamage: 1,
     bulletSize: 3,
+    bulletSpeed: 100,
     movementSpeed: 10,
     dashDistance: 200,
+    dashStealthDuration: 0, //every 10 = 1 second
+    playerRadius: 15,
 
     fireCooldown: 20,
     ultimateCooldown: 75,
@@ -40,7 +48,7 @@ export class Player {
         //default
         this.x = x;
         this.y = y;
-        this.radius = radius;
+        this.radius = playerStats.playerRadius;
         this.vx = vx;
         this.vy = vy;
         this.ax = ax;
@@ -61,6 +69,7 @@ export class Player {
         this.fireCooldown = 0;
         this.ultimateCooldown = 0;
         this.dashCooldown = 0;
+        this.stealth = false; //dashStealth
 
         this.upgrades = {};
     } 
@@ -75,11 +84,19 @@ export class Player {
     }
 
     drawPlayer() {
-        ctx.beginPath();
-        ctx.arc(this.x, this.y, this.radius, 0, Math.PI * 2);
-        ctx.fillStyle = '#7c7ce6';
-        ctx.fill();
-        ctx.closePath();
+        if (!this.stealth) {
+            ctx.beginPath();
+            ctx.arc(this.x, this.y, this.radius, 0, Math.PI * 2);
+            ctx.fillStyle = '#7c7ce6';
+            ctx.fill();
+            ctx.closePath();
+        } else {
+            ctx.beginPath();
+            ctx.arc(this.x, this.y, this.radius, 0, Math.PI * 2);
+            ctx.fillStyle = '#7c7ce662';
+            ctx.fill();
+            ctx.closePath();
+        }
     }
 
     drawDamage() {
@@ -91,16 +108,29 @@ export class Player {
     }
 
     drawDirection() {
-        ctx.save();
-        ctx.beginPath();
-        ctx.translate(this.x, this.y);
-        ctx.rotate(this.angle)
-        ctx.rect(5, -5, 20, 10);
-        ctx.fillStyle = '#b5b5b5';
-        ctx.strokeStyle = "#dbdbdb";
-        ctx.lineWidth = 0;
-        ctx.fill();
-        ctx.restore();
+        if (!this.stealth) {
+            ctx.save();
+            ctx.beginPath();
+            ctx.translate(this.x, this.y);
+            ctx.rotate(this.angle)
+            ctx.rect(5, -5, 20, 10);
+            ctx.fillStyle = '#b5b5b5';
+            ctx.strokeStyle = "#dbdbdb";
+            ctx.lineWidth = 0;
+            ctx.fill();
+            ctx.restore();
+        } else {
+            ctx.save();
+            ctx.beginPath();
+            ctx.translate(this.x, this.y);
+            ctx.rotate(this.angle)
+            ctx.rect(5, -5, 20, 10);
+            ctx.fillStyle = '#b5b5b52b';
+            ctx.strokeStyle = "#dbdbdb";
+            ctx.lineWidth = 0;
+            ctx.fill();
+            ctx.restore();
+        }
     }
 
     drawTrail() {
@@ -108,7 +138,7 @@ export class Player {
         ctx.beginPath();
         ctx.translate(this.x, this.y);
         ctx.rotate(this.angle);
-        ctx.rect(-playerStats.dashDistance - 10, -14, playerStats.dashDistance + 10, 28)
+        ctx.rect(-playerStats.dashDistance - 10, -this.radius, playerStats.dashDistance + 10, this.radius * 2)
         ctx.fillStyle = '#7c7ce6';
         ctx.lineWidth = 0;
         ctx.fill();
@@ -219,7 +249,7 @@ export class Player {
 export function createPlayer() { //doesnt work because isPlayerCreated is constant when exporting
     if (isPlayerCreated) return;
 
-    let o = new Player(250, 250, 15, 0, 0, 0, 0, 0);
+    let o = new Player(250, 250, this.radius, 0, 0, 0, 0, 0);
     entities.player.push(o);
 
     isPlayerCreated = true;
@@ -227,7 +257,7 @@ export function createPlayer() { //doesnt work because isPlayerCreated is consta
 
 function shootBullet(player) {
     if (!isPlayerCreated || !interacted) return;
-    let speed = 300;
+    let speed = playerStats.bulletSpeed;
 
     let angle = Math.atan2(player.vy, player.vx);
 
@@ -270,7 +300,22 @@ function doDash(player) {
     player.x += Math.cos(angle) * dashDistance;
     player.y += Math.sin(angle) * dashDistance;
     player.drawTrail();
+    if (playerStats.dashStealthDuration > 0) doStealth(player);
     playSound('SFXkachow.mp3');
+};
+
+async function doStealth(player) {
+    let timer = 0;
+
+    while (timer < playerStats.dashStealthDuration) {
+        player.stealth = true;
+
+        ctx.save();
+        await delay(100); //every 0.1 seconds, timer += 1
+        timer++
+        ctx.restore();
+    }
+    player.stealth = false;
 };
 
 export function playerMoveSet(player) {

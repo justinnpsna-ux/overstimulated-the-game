@@ -165,6 +165,7 @@ export class BadBullet extends Bullet {
 
             for (let o of grid[targetIndex]) {
                 if (this.id <= o.id) continue; //anti double collide
+                if (o.stealth) continue;
 
                 if (exceptEnemies && !o.isPlayer) continue; //not player, not swinger? check
                 if (exceptEnemies && o.bullet) continue; //bad bullet collide with good bullet ignore
@@ -280,6 +281,8 @@ export class BadLaser extends Bullet {
         if (this.warningLaser === true || this.warningLaser === null) return;
 
         let p = entities.player[0];
+        if (p.stealth) return;
+
         let knockback = 50;
         let laserWidth = 50;
 
