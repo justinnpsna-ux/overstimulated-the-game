@@ -22,7 +22,9 @@ class Upgrade {
             { name: "dominos 30 mins or less", desc: "+30% Bullet Speed", effect: {bulletSpeed: 30} },
             { name: "erling haaland vs ball", desc: "+20% Movement Speed", effect: {movementSpeed: 2} },
             { name: "fast metabolism", desc: "-10% Player Size", effect: {playerRadius: -1.5} },
+            { name: "shaq free throw", desc: "+10% Bullet Recoil", effect: {bulletSpread: 1} },
             { name: "dry scoop pre workout", desc: "-20% Reload Time, -1 Health", effect: {fireCooldown: -4, health: -1} },
+            { name: "after kpot", desc: "+30% Bullet Recoil, -30% Movement Speed", effect: {bulletSpread: 3, movementSpeed: -3} },
             { name: "hoodie method", desc: "Immune for +0.2s after Dash", effect: {dashStealthDuration: 2} },
 
             //1000 degree honey bun: burn enemies

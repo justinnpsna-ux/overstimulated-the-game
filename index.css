@@ -1,3 +1,58 @@
+/* MAIN MENU SCREEN */
+.main {
+    position: fixed;
+    top: 0;
+    right: 0;
+    width: 100vw;         
+    height: 100vh;   
+    opacity: 0.8;     
+    background-image: url('mainmenu.png');
+    box-shadow: -5px 0 15px rgba(0, 0, 0, 0.2);
+    transition: opacity 0.5s ease-in-out;
+    z-index: 10000;       
+}
+
+.main-content {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    
+}
+
+.main-content .button {
+    background-color: #ffffff; 
+    font-size: 50px;
+    border: 0px;
+    border-radius: 100px;
+
+    margin-left: 50px;
+    margin-right: 50px;
+
+    padding-top: 10px; 
+    padding-bottom: 10px; 
+    padding-left: 20px;   
+    padding-right: 20px;  
+    padding: 10px 20px; 
+
+    cursor: pointer;
+}
+
+.main-content .button:hover {
+  background-color: rgb(103, 129, 143); /* Changes color on hover */
+  cursor: pointer;        /* Shows a hand cursor */
+}
+
+#mainHeader {
+    text-align: center;
+    font-size: 125px;
+    color: rgb(254, 254, 255);
+}
+
+.main.hidden {
+    opacity: 0;
+}
+
 /* Base drawer styling (Hidden off-screen to the right by default) */
 .levels {
     position: fixed;

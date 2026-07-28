@@ -3,11 +3,18 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Ball Game #2</title>
+    <title>Overstimulated: the game</title>
     <link rel="stylesheet" href="index.css">
     <link rel="stylesheet" href="gamescreen.css">
 </head>
 <body>
+    <div id="mainMenu" class="main">
+        <h2 id="mainHeader">overstimulated: the game</h2>
+        <div class="win-content">
+            <button id="startGameBtn" class="button">start</button>
+        </div>
+    </div>
+
     <canvas id="canvas" width="800" height="600" style="border: 1px solid #000;">
     </canvas>
     <h4 class="gameHeader">time: <span id="timer" type="number"></span></h4>

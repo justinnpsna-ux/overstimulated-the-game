@@ -1,7 +1,8 @@
 // module for player classes
 import { canvas, ctx, nextCircleId, cellSize, 
     totalColumns, grid, cellChecks, isPlayerCreated, 
-    interacted, keysPressed } from './index.js';
+    interacted, keysPressed, 
+    getRng} from './index.js';
 
 //arrays
 import { entities } from './index.js'
@@ -14,15 +15,27 @@ import { BadBullet, Bullet } from './MODbullet.js'
 
 import { delay } from './MODboss.js';
 
+function getRandomArbitrary(min, max) {
+  // Returns a floating-point number between min (inclusive) and max (exclusive)
+  return Math.random() * (max - min) + min;
+};
+
 export const playerStatsOriginal = //so we have a copy at all times
 {   health: 10,
+    playerRadius: 15,
+    movementSpeed: 10,
+
     bulletDamage: 1,
     bulletSize: 3,
     bulletSpeed: 100,
-    movementSpeed: 10,
+    bulletSpread: 0,
+    bulletPushback: 0,
+
+    burstShot: 0,
+    powerfulShot: 0,
+
     dashDistance: 200,
-    dashStealthDuration: 0,
-    playerRadius: 15,
+    dashStealthDuration: 0, //every 10 = 1 second
 
     fireCooldown: 20,
     ultimateCooldown: 75,
@@ -31,13 +44,24 @@ export const playerStatsOriginal = //so we have a copy at all times
 
 export const playerStats = //so we can do power ups (maybe use points to buy?)
 {   health: 10,
+    playerRadius: 15,
+    movementSpeed: 10,
+
     bulletDamage: 1,
     bulletSize: 3,
     bulletSpeed: 100,
-    movementSpeed: 10,
+    bulletSpread: 0,
+    bulletPushback: 0,
+
+    ultimateDamage: 1,
+    ultimateRadius: 85,
+    ultimateKnockback: 10,
+
+    burstShot: 0,
+    powerfulShot: 0,
+
     dashDistance: 200,
     dashStealthDuration: 0, //every 10 = 1 second
-    playerRadius: 15,
 
     fireCooldown: 20,
     ultimateCooldown: 75,
@@ -264,6 +288,13 @@ function shootBullet(player) {
     if (player.vx === 0 && player.vy === 0) {
         angle = 0; 
     }
+
+    if (playerStats.bulletSpread > 0) {
+        let spread = getRandomArbitrary(-playerStats.bulletSpread, playerStats.bulletSpread);
+        console.log(spread)
+        angle += spread / 10;
+    }
+
     let bvx = Math.cos(angle) * speed;
     let bvy = Math.sin(angle) * speed;
     let o = new Bullet(player.x + (player.radius + 5) * Math.cos(angle), 

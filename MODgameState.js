@@ -59,6 +59,13 @@ export class GameState {
 function screenShake(multiplier) { //new feature
 
 }
+//main menu
+const mainMenu = document.getElementById('mainMenu');
+const startGameBtn = document.getElementById('startGameBtn');
+
+startGameBtn.addEventListener('click', () => {
+    mainMenu.classList.add('hidden');
+});
 
 //levels buttons
 export const winMenu = document.getElementById('winMenu');
