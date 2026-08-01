@@ -5,7 +5,7 @@ import { Bullet, BadBullet, BadLaser } from './MODbullet.js'
 import { levelButtons, LevelManager, unlockNextLevel } from './MODlevels.js'
 import { Animate } from './MODanimate.js'
 import { GameState } from './MODgameState.js'
-import { spawnBall, spawnChargeHitter, spawnSingleShooter, spawnSpreadShooter, spawnLaserShooter } from './MODlevels.js'
+import { spawnBall, spawnChargeHitter, spawnSingleShooter, spawnSpreadShooter, spawnLaserShooter, spawnSpinShooter } from './MODlevels.js'
 import { PointsCounter } from './MODpoints.js'
 
 export const canvas = document.getElementById('canvas');
@@ -130,6 +130,8 @@ function animate() {
 
     animateFunc.drawLaserShooter();
 
+    animateFunc.drawSpinShooter();
+
     animateFunc.drawBullets();
 
     animateFunc.drawSwinger();
@@ -167,7 +169,7 @@ freeFall.onclick = () => {
 };
 
 test.onclick = () => {
-    spawnLaserShooter();
+    spawnSpinShooter();
 };
 
 pendulum.onclick = () => {

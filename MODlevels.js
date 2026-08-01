@@ -1,7 +1,7 @@
 //module for levels
 import { Player, playerMoveSet } from './MODplayer.js'
 import { Circle } from './MODcircle.js'
-import { SingleShooter, SpreadShooter, ChargeHitter, LaserShooter } from './MODboss.js'
+import { SingleShooter, SpreadShooter, ChargeHitter, LaserShooter, SpinShooter } from './MODboss.js'
 import { Bullet, BadBullet } from './MODbullet.js'
 
 //arrays
@@ -209,6 +209,12 @@ export function spawnLaserShooter() {
     o.fireBossCooldown = 100;
     entities.enemies.push(o);
 };
+
+export function spawnSpinShooter() {
+    let o = new SpinShooter(getRng(0, canvas.width), getRng(0, canvas.height / 4), 60, 0, 0, 0, 0);
+    o.fireBossCooldown = 100;
+    entities.enemies.push(o);
+}
 
 //levels buttons
 const levelsPage = document.getElementById('levelsPage');

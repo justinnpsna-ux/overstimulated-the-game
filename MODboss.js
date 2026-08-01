@@ -471,6 +471,121 @@ export class LaserShooter extends Boss {
     }
 }
 
+export class SpinShooter extends Boss {
+    constructor(x, y, radius, vx, vy, ax, ay, mass) {
+        super(x, y, radius, vx, vy, ax, ay, mass);
+        this.spinShooter = true;
+        this.laserTimer = 0;
+
+        this.angle = 0;
+        this.oldAngle = 0;
+
+        this.radius = 80;
+        this.health = 20;
+
+    } 
+
+    drawBoss() {
+        ctx.beginPath();
+        ctx.arc(this.x, this.y, this.radius, 0, Math.PI * 2);
+        ctx.fillStyle = '#d10e80';
+        ctx.strokeStyle = "#ff04c4";
+        ctx.lineWidth = 2;
+        ctx.fill();
+        ctx.stroke();
+        ctx.closePath();
+    }
+
+    drawDirection() {
+        let angleNumber = 0;
+        let angle = this.angle;
+        let oldAngle = this.oldAngle;
+
+        while(angleNumber < 8) {
+            ctx.save();
+            ctx.beginPath();
+            ctx.translate(this.x, this.y);
+            //ctx.rotate(this.angle)
+            if (this.laserTimer < 450) {
+                ctx.rotate(angle)
+            } else if (this.laserTimer < 500 || this.laserTimer > 525) {
+                ctx.rotate(oldAngle)
+            } else {
+                ctx.rotate(oldAngle)
+            }
+            ctx.rect(0, -65, 80, 130);
+            ctx.fillStyle = '#46084d';
+            ctx.strokeStyle = "#a806c5";
+            ctx.lineWidth = 2;
+            ctx.fill();
+            ctx.stroke();
+            ctx.restore();
+            angle += Math.PI / 4
+            oldAngle += Math.PI / 4
+            angleNumber++;
+        }
+        
+    }
+
+    async shootBossBullet(boss, big) {
+        if (!isPlayerCreated || !interacted) return; 
+  
+        let p = entities.player[0]; 
+        let knockback = 1; 
+        let dx = p.x - boss.x; 
+        let dy = p.y - boss.y; 
+        let angle = Math.atan2(dy, dx); 
+        let angleNumber = 0;
+  
+        if (dx === 0 && dy === 0) { angle = 0 }; 
+
+        while(angleNumber < 8) {
+            let o = new BadLaser(boss.x, boss.y); 
+
+            if (this.laserTimer < 450) {
+                o.warningLaser = true; 
+                o.angle = angle;
+                this.oldAngle = angle;
+
+            } else if (this.laserTimer < 500 || this.laserTimer > 525) {
+                o.warningLaser = null;
+                this.angle = this.oldAngle;
+                o.angle = this.oldAngle;
+            
+            } else {
+                o.warningLaser = false;
+                o.angle = this.oldAngle;            
+
+            }
+        
+            entities.badBullets.push(o); 
+            o.checkCollisions() //bad laser coll check doesnt work on MODanimate
+
+            if (o.warningLaser === false) {
+                let bvx = Math.cos(this.oldAngle) * knockback; 
+                let bvy = Math.sin(this.oldAngle) * knockback; 
+                this.vx -= bvx; 
+                this.vy -= bvy; 
+            }
+            angle += Math.PI / 4
+            angleNumber++
+        }
+
+        this.vx /= 1.02; 
+        this.vy /= 1.02; 
+
+        boss.fireBossCooldown = 0; 
+        ctx.save();
+        await delay(1000); 
+        this.laserTimer++;
+        if (this.laserTimer === 1) playSound("SFXmamaHaha.mp3");
+        if (this.laserTimer === 490) playSound("SFXmamaBoomShort.mp3");
+        ctx.restore();
+        
+        if (this.laserTimer > 600) this.laserTimer = 0; //50 is 1 second
+    }
+}
+
 function getDamage() { //feature? to show how much damage each enemy has?
 
 };

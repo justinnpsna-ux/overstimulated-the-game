@@ -5,10 +5,11 @@
     right: 0;
     width: 100vw;         
     height: 100vh;   
-    opacity: 0.8;     
+    opacity: 0.8;    
+    display: block; 
     background-image: url('mainmenu.png');
     box-shadow: -5px 0 15px rgba(0, 0, 0, 0.2);
-    transition: opacity 0.5s ease-in-out;
+    transition: opacity 0.5s ease, display 0.5s ease allow-discrete;
     z-index: 1;       
 }
 
@@ -45,13 +46,13 @@
 
 #mainHeader {
     text-align: center;
-    font-size: 125px;
+    font-size: 100px;
     color: rgb(254, 254, 255);
 }
 
 .main.hidden {
     opacity: 0;
-    z-index: -1;
+    display: none;
 }
 
 /* Base drawer styling (Hidden off-screen to the right by default) */

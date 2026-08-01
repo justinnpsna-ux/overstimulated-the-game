@@ -204,6 +204,29 @@ export class Animate { //list all functions needed in animate func
         };
     };
 
+    drawSpinShooter() {
+        for (let b of entities.enemies) {
+            if (!b.spinShooter) continue;
+            if (b.fireBossCooldown <= 0) {
+                b.shootBossBullet(b, false);
+            } else {
+                b.fireBossCooldown--;
+            }
+            b.getAngle(b);
+            b.drawDirection();
+            b.checkBorders();
+
+            if (b.damaged && b.cooldown < 3) {
+                b.cooldown++;
+                b.drawDamage();
+            } else {
+                b.damaged = false;
+                b.drawBoss()
+                b.cooldown = 0;
+            };
+        };
+    };
+
     drawSwinger() {
         for (let o1 of entities.swinger) {
             o1.checkBorders();
