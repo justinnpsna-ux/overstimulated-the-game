@@ -549,12 +549,11 @@ export class SpinShooter extends Boss {
 
             } else if (this.laserTimer < 500 || this.laserTimer > 525) {
                 o.warningLaser = null;
-                this.angle = this.oldAngle;
                 o.angle = this.oldAngle;
             
             } else {
                 o.warningLaser = false;
-                o.angle = this.oldAngle;            
+                o.angle = this.oldAngle;           
 
             }
         
@@ -568,6 +567,7 @@ export class SpinShooter extends Boss {
                 this.vy -= bvy; 
             }
             angle += Math.PI / 4
+            this.oldAngle += Math.PI / 4
             angleNumber++
         }
 
